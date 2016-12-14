@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="utf-8">
+    <title>Angular Routing Template</title>
+    <style>
+    /* Demo styles not required */
+    * {font-family: arial;}
+    .myApp-container {margin: 0 auto; padding-top: 50px; width: 1140px;}
+    </style>
+</head>
+<body>
+<div class="myApp-container">
+
+	<h1>Basic Angular Routing Template</h1>	
+	<p><a href="#route1">Route 1</a> / <a href="#route2">Route 2</a></p>
+
+	<!--// ng-view (this is where the Route 1 and Route 2 templates display)  //-->
+	<div ng-view></div>
+	<!--// end of ng-view //-->
+
+</div>
+</body>
+</html>
+<!--// angular dependencies //-->
+<script src="angular.min.js"></script>
+<script src="angular-route.min.js"></script>
+<!--// end of angular dependencies //-->
+
+<!--// Route 1 Template //-->
+<script type="text/ng-template" id="route1.html">
+	<h2>{{message}}</h2>
+</script>
+<!--// end of Route 1 Template //-->
+
+<!--// Route 2 Template //-->
+<script type="text/ng-template" id="route2.html">
+	<h2>{{message}}</h2>
+</script>
+<!--// enf of Route 2 Template //-->
+
+<!--// app module, app config, app cpontrollers //-->
+<script>
+// create the module
+var myApp = angular.module("myApp", ['ngRoute']);
+
+// configure the $routeProvider
+myApp.config(['$routeProvider', function($routeProvider) {
+	$routeProvider.
+	when('/route1', { // the route to be displayed
+	templateUrl: 'route1.html', // template to be used
+	controller: 'route1Ctrl' // controller to be used
+	}).
+	when('/route2', { // the route to be displayed
+	templateUrl: 'route2.html',  // template to be used
+	controller: 'route2Ctrl' // controller to be used
+	}).
+	otherwise({ // if nothing is selected we then redirect to Route 1
+	redirectTo: '/route1' // the route we redirect to is Route 1 and will display the Route 1 template
+	});
+}]);
+
+// create a controller for Route 1
+myApp.controller('route1Ctrl', function($scope) {
+	// set the message (copy/text) for Route 1
+	$scope.message = "Route 1";
+});
+
+// create a controller for Route 2
+myApp.controller('route2Ctrl', function($scope) {
+	// set the message (copy/text) for Route 2
+	$scope.message = "Route 2";
+});
+</script>
+<!--// end of app module,  app config, app cpontrollers //-->
